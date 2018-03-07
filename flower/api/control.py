@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 class ControlHandler(BaseHandler):
     INSPECT_METHODS = ('stats', 'active_queues', 'registered', 'scheduled',
                        'active', 'reserved', 'revoked', 'conf')
+    CUSTOM_INSPECT_METHODS = ('inca_worker_environment',)
+    ALL_INSPECT_METHODS = INSPECT_METHODS + CUSTOM_INSPECT_METHODS
     worker_cache = collections.defaultdict(dict)
 
     @gen.coroutine
@@ -35,18 +37,20 @@ class ControlHandler(BaseHandler):
             timeout=timeout, destination=destination)
         for method in cls.INSPECT_METHODS:
             futures.append(app.delay(getattr(inspect, method)))
+        for method in cls.CUSTOM_INSPECT_METHODS:
+            futures.append(app.delay(inspect._request, method))
 
         results = yield futures
 
         for i, result in enumerate(results):
             if result is None:
                 logger.warning("'%s' inspect method failed",
-                               cls.INSPECT_METHODS[i])
+                               cls.ALL_INSPECT_METHODS[i])
                 continue
             for worker, response in result.items():
                 if response is not None:
                     info = cls.worker_cache[worker]
-                    info[cls.INSPECT_METHODS[i]] = response
+                    info[cls.ALL_INSPECT_METHODS[i]] = response
                     info['timestamp'] = time.time()
 
     def is_worker(self, workername):

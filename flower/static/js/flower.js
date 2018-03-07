@@ -697,7 +697,15 @@ var flower = (function () {
                     }
                     return data;
                 }
-            }, ],
+            }, {
+                targets: 8,
+                data: 'worker_type',
+                defaultContent: 'undefined'
+            }, {
+                targets: 9,
+                data: 'host_id',
+                defaultContent: 'undefined'
+            }],
         });
 
         var autorefresh = $.urlParam('autorefresh') || 1;

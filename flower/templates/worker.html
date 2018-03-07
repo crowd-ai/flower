@@ -26,7 +26,8 @@
 
         <div class="tabbable">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-pool" data-toggle="tab">Pool</a></li>
+            <li class="active"><a href="#tab-environment" data-toggle="tab">Environment</a></li>
+            <li><a href="#tab-pool" data-toggle="tab">Pool</a></li>
             <li><a href="#tab-broker" data-toggle="tab">Broker</a></li>
             <li><a href="#tab-queues" data-toggle="tab">Queues</a></li>
             <li><a href="#tab-tasks" data-toggle="tab">Tasks</a></li>
@@ -36,8 +37,25 @@
           </ul>
 
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-pool">
+            <div class="tab-pane active" id="tab-environment">
+              <div class="span6">
+                <table class="table table-bordered table-striped">
+                  <caption>Environment</caption>
+                  <tbody>
+                  {% if isinstance(worker.get('inca_worker_environment'), dict) %}
+                      {% for name, value in worker['inca_worker_environment'].items() %}
+                          <tr>
+                              <td>{{ name }}</td>
+                              <td>{{ value }}</td>
+                          </tr>
+                      {% end %}
+                  {% end %}
+                  </tbody>
+                </table>
+              </div>
+            </div> <!-- end environment tab -->
 
+            <div class="tab-pane" id="tab-pool">
               <div class="row-fluid">
                 <div class="span6">
                   <table class="table table-bordered table-striped">
@@ -118,7 +136,7 @@
             </div> <!-- end pool tab -->
 
             <div class="tab-pane" id="tab-broker">
-              <div class="span6">
+              <div class="span4">
                 <table class="table table-bordered table-striped">
                   <caption>Broker options</caption>
                   <tbody>

@@ -41,6 +41,11 @@ class EventsState(State):
         worker_name = event['hostname']
         event_type = event['type']
 
+        if event['type'] == 'worker-offline':
+            del self.counter[worker_name]
+            super(EventsState, self).event(event)
+            return
+
         self.counter[worker_name][event_type] += 1
 
         # Send event to api subscribers (via websockets)

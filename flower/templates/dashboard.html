@@ -17,7 +17,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
 
-    <table id="workers-table" class="table table-bordered table-striped">
+    <table id="workers-table" class="table table-bordered table-striped" style="table-layout: auto">
       <thead>
         <tr>
             <th>Worker Name</th>
@@ -28,6 +28,8 @@
             <th>Succeeded</th>
             <th>Retried</th>
             <th>Load Average</th>
+            <th>Worker Type</th>
+            <th>Host ID</th>
         </tr>
       </thead>
       <tbody>
@@ -41,6 +43,8 @@
             <td>{{ info.get('task-succeeded', 0) }}</td>
             <td>{{ info.get('task-retried', 0) }}</td>
             <td>{{ humanize(info.get('loadavg', 'N/A')) }}</td>
+            <td>{{ info.get('worker_type') }}</td>
+            <td>{{ info.get('host_id') }}</td>
         </tr>
         {% end %}
       </tbody>
