@@ -28,7 +28,7 @@ class DashboardView(BaseHandler):
         events = app.events.state
         broker = app.capp.connection().as_uri()
 
-        if refresh or not ListWorkers.worker_cache:
+        if refresh:
             try:
                 yield ListWorkers.update_workers(app=app)
             except Exception as e:
@@ -43,7 +43,12 @@ class DashboardView(BaseHandler):
             info.update(self._as_dict(worker))
             info.update(status=worker.alive)
 
-            worker_meta = dict(ListWorkers.worker_cache.get(name))
+            worker_meta_obj = ListWorkers.worker_cache.get(name)
+            if not worker_meta_obj:
+                yield ListWorkers.update_workers(app=app, workername=name)
+                worker_meta_obj = ListWorkers.worker_cache.get(name)
+
+            worker_meta = dict(worker_meta_obj)
             inca_worker_env = worker_meta.get('inca_worker_environment', {})
             info.update(
                 worker_type=inca_worker_env.get('worker_type'),
