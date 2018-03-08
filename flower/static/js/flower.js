@@ -650,7 +650,7 @@ var flower = (function () {
             scrollCollapse: true,
             ajax: url_prefix() + '/dashboard?json=1',
             order: [
-                [1, "asc"]
+                [8, 'desc']
             ],
             columnDefs: [{
                 targets: 0,
@@ -700,7 +700,14 @@ var flower = (function () {
             }, {
                 targets: 8,
                 data: 'worker_type',
-                defaultContent: 'undefined'
+                render: function (data, type, full, meta) {
+                    var data = data || 'undefined';
+                    var label_type = {
+                        'cpu': 'primary',
+                        'gpu': 'success',
+                    }[data] || 'light';
+                    return `<span class="label label-${label_type}">${data}</span>`;
+                }
             }, {
                 targets: 9,
                 data: 'host_id',

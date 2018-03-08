@@ -34,6 +34,12 @@ class DashboardView(BaseHandler):
             except Exception as e:
                 logger.exception('Failed to update workers: %s', e)
 
+        # HACK(aleks, 03/08/18): filter out offline workers
+        for name in list(events.counter.keys()):
+            worker = events.workers[name]
+            if not worker.alive:
+                del events.counter[name]
+
         workers = {}
         for name, values in events.counter.items():
             if name not in events.workers:
@@ -46,7 +52,7 @@ class DashboardView(BaseHandler):
             worker_meta_obj = ListWorkers.worker_cache.get(name)
             if not worker_meta_obj:
                 yield ListWorkers.update_workers(app=app, workername=name)
-                worker_meta_obj = ListWorkers.worker_cache.get(name)
+                worker_meta_obj = ListWorkers.worker_cache.get(name) or {}
 
             worker_meta = dict(worker_meta_obj)
             inca_worker_env = worker_meta.get('inca_worker_environment', {})
