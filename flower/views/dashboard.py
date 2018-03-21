@@ -35,13 +35,16 @@ class DashboardView(BaseHandler):
                 logger.exception('Failed to update workers: %s', e)
 
         # HACK(aleks, 03/08/18): filter out offline workers
-        for name in list(events.counter.keys()):
+        filtered_counter = {}
+        for name, values in list(events.counter.items()):
             worker = events.workers[name]
-            if not worker.alive:
+            if worker.alive:
+                filtered_counter[name] = values
+            else:
                 del events.counter[name]
 
         workers = {}
-        for name, values in events.counter.items():
+        for name, values in filtered_counter.items():
             if name not in events.workers:
                 continue
             worker = events.workers[name]

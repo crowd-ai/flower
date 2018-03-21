@@ -702,11 +702,11 @@ var flower = (function () {
                 data: 'worker_type',
                 render: function (data, type, full, meta) {
                     var data = data || 'undefined';
-                    var label_type = {
-                        'cpu': 'primary',
-                        'gpu': 'success',
-                    }[data] || 'light';
-                    return `<span class="label label-${label_type}">${data}</span>`;
+                    var label_cls = {
+                        'cpu': 'label-info',
+                        'gpu': 'label-success',
+                    }[data] || '';
+                    return `<span class="label ${label_cls}">${data}</span>`;
                 }
             }, {
                 targets: 9,
