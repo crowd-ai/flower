@@ -30,6 +30,7 @@
             <th>Load Average</th>
             <th>Worker Type</th>
             <th>Host ID</th>
+            <th>Build Number</th>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +46,7 @@
             <td>{{ humanize(info.get('loadavg', 'N/A')) }}</td>
             <td>{{ info.get('worker_type') }}</td>
             <td>{{ info.get('host_id') }}</td>
+            <td>{{ info.get('build_number') }}</td>
         </tr>
         {% end %}
       </tbody>

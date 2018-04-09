@@ -61,7 +61,8 @@ class DashboardView(BaseHandler):
             inca_worker_env = worker_meta.get('inca_worker_environment', {})
             info.update(
                 worker_type=inca_worker_env.get('worker_type'),
-                host_id=inca_worker_env.get('host_id')
+                host_id=inca_worker_env.get('host_id'),
+                build_number=inca_worker_env.get('build_number'),
             )
 
             workers[name] = info

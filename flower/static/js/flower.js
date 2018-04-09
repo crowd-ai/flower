@@ -650,7 +650,8 @@ var flower = (function () {
             scrollCollapse: true,
             ajax: url_prefix() + '/dashboard?json=1',
             order: [
-                [8, 'desc']
+                [8, 'desc'],
+                [10, 'desc'],
             ],
             columnDefs: [{
                 targets: 0,
@@ -711,6 +712,10 @@ var flower = (function () {
             }, {
                 targets: 9,
                 data: 'host_id',
+                defaultContent: 'undefined'
+            }, {
+                targets: 10,
+                data: 'build_number',
                 defaultContent: 'undefined'
             }],
         });
