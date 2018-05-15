@@ -652,6 +652,7 @@ var flower = (function () {
             order: [
                 [8, 'desc'],
                 [10, 'desc'],
+                [0, 'desc'],
             ],
             columnDefs: [{
                 targets: 0,

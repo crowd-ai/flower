@@ -44,8 +44,8 @@ class ControlHandler(BaseHandler):
 
         for i, result in enumerate(results):
             if result is None:
-                logger.warning("'%s' inspect method failed",
-                               cls.ALL_INSPECT_METHODS[i])
+                logger.warning("'%s' inspect method failed for worker %s",
+                               cls.ALL_INSPECT_METHODS[i], workername or 'all')
                 continue
             for worker, response in result.items():
                 if response is not None:
