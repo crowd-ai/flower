@@ -712,7 +712,7 @@ var flower = (function () {
                 }
             }, {
                 targets: 9,
-                data: 'host_id',
+                data: 'container_id',
                 defaultContent: 'undefined'
             }, {
                 targets: 10,

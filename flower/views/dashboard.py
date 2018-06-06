@@ -59,9 +59,13 @@ class DashboardView(BaseHandler):
 
             worker_meta = dict(worker_meta_obj)
             inca_worker_env = worker_meta.get('inca_worker_environment', {})
+
+            full_container_id = '{}@{}'.format(
+                inca_worker_env.get('container_id'),
+                inca_worker_env.get('host_id'))
             info.update(
                 worker_type=inca_worker_env.get('worker_type'),
-                host_id=inca_worker_env.get('host_id'),
+                container_id=full_container_id,
                 build_number=inca_worker_env.get('build_number'),
             )
 
